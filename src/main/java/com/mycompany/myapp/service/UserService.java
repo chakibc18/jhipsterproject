@@ -269,6 +269,21 @@ public class UserService {
             cacheManager.getCache("users").evict(user.getLogin());
         }
     }
+    // ici pour faire un truc periodique comme envoie mail ou recupere donnee meteo/////////////////////////////////////////////////////////
+
+    @Scheduled(cron = "0 17 * * 3 ?")
+    public void sendMail() {
+        //verifier les conditoins pour chaque sport
+        //verifysport();
+        // verifier pour chaque utilisateur
+        //verifyUser();
+        //envoyer un mail
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            log.debug("sending mails to users{}", user.getLogin());
+
+        }
+    }
 
     /**
      * @return a list of all the authorities
