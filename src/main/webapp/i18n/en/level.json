@@ -1,0 +1,10 @@
+{
+    "weekendAppApp": {
+        "Level" : {
+            "null": "",
+            "Debutant": "Debutant",
+            "Avancee": "Avancee",
+            "Professionnel": "Professionnel"
+        }
+    }
+}

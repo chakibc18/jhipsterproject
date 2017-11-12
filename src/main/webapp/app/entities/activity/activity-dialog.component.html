@@ -1,0 +1,142 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myActivityLabel" jhiTranslate="weekendAppApp.activity.home.createOrEditLabel">Create or edit a Activity</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!activity.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="activity.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="weekendAppApp.activity.type" for="field_type">Type</label>
+            <select class="form-control" name="type" [(ngModel)]="activity.type" id="field_type"  required>
+                <option value="SKI">{{'weekendAppApp.Type.SKI' | translate}}</option>
+                <option value="VOILE">{{'weekendAppApp.Type.VOILE' | translate}}</option>
+                <option value="PLAGE">{{'weekendAppApp.Type.PLAGE' | translate}}</option>
+                <option value="SURF">{{'weekendAppApp.Type.SURF' | translate}}</option>
+                <option value="WAKE">{{'weekendAppApp.Type.WAKE' | translate}}</option>
+                <option value="VELO">{{'weekendAppApp.Type.VELO' | translate}}</option>
+                <option value="COURSEAPIED">{{'weekendAppApp.Type.COURSEAPIED' | translate}}</option>
+            </select>
+            <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="weekendAppApp.activity.city" for="field_city">City</label>
+            <select class="form-control" name="city" [(ngModel)]="activity.city" id="field_city"  required>
+                <option value="ABBEVILLE">{{'weekendAppApp.City.ABBEVILLE' | translate}}</option>
+                <option value="LILLE_LESQUIN">{{'weekendAppApp.City.LILLE_LESQUIN' | translate}}</option>
+                <option value="PTE_DE_LA_HAGUE">{{'weekendAppApp.City.PTE_DE_LA_HAGUE' | translate}}</option>
+                <option value="CAEN_CARPIQUET">{{'weekendAppApp.City.CAEN_CARPIQUET' | translate}}</option>
+                <option value="ROUEN_BOOS">{{'weekendAppApp.City.ROUEN_BOOS' | translate}}</option>
+                <option value="REIMS_PRUNAY">{{'weekendAppApp.City.REIMS_PRUNAY' | translate}}</option>
+                <option value="BREST_GUIPAVAS">{{'weekendAppApp.City.BREST_GUIPAVAS' | translate}}</option>
+                <option value="PLOUMANACH">{{'weekendAppApp.City.PLOUMANACH' | translate}}</option>
+                <option value="RENNES_ST_JACQUES">{{'weekendAppApp.City.RENNES_ST_JACQUES' | translate}}</option>
+                <option value="ALENCON">{{'weekendAppApp.City.ALENCON' | translate}}</option>
+                <option value="ORLY">{{'weekendAppApp.City.ORLY' | translate}}</option>
+                <option value="TROYES_BARBEREY">{{'weekendAppApp.City.TROYES_BARBEREY' | translate}}</option>
+                <option value="NANCY_OCHEY">{{'weekendAppApp.City.NANCY_OCHEY' | translate}}</option>
+                <option value="STRASBOURG_ENTZHEIM">{{'weekendAppApp.City.STRASBOURG_ENTZHEIM' | translate}}</option>
+                <option value="BELLE_ILE_LE_TALUT">{{'weekendAppApp.City.BELLE_ILE_LE_TALUT' | translate}}</option>
+                <option value="NANTES_BOUGUENAIS">{{'weekendAppApp.City.NANTES_BOUGUENAIS' | translate}}</option>
+                <option value="TOURS">{{'weekendAppApp.City.TOURS' | translate}}</option>
+                <option value="BOURGES">{{'weekendAppApp.City.BOURGES' | translate}}</option>
+                <option value="DIJON_LONGVIC">{{'weekendAppApp.City.DIJON_LONGVIC' | translate}}</option>
+                <option value="BALE_MULHOUSE">{{'weekendAppApp.City.BALE_MULHOUSE' | translate}}</option>
+                <option value="PTE_DE_CHASSIRON">{{'weekendAppApp.City.PTE_DE_CHASSIRON' | translate}}</option>
+                <option value="POITIERS_BIARD">{{'weekendAppApp.City.POITIERS_BIARD' | translate}}</option>
+                <option value="LIMOGES_BELLEGARDE">{{'weekendAppApp.City.LIMOGES_BELLEGARDE' | translate}}</option>
+                <option value="CLERMONT_FD">{{'weekendAppApp.City.CLERMONT_FD' | translate}}</option>
+                <option value="LE_PUY_LOUDES">{{'weekendAppApp.City.LE_PUY_LOUDES' | translate}}</option>
+                <option value="LYON_ST_EXUPERY">{{'weekendAppApp.City.LYON_ST_EXUPERY' | translate}}</option>
+                <option value="BORDEAUX_MERIGNAC">{{'weekendAppApp.City.BORDEAUX_MERIGNAC' | translate}}</option>
+                <option value="GOURDON">{{'weekendAppApp.City.GOURDON' | translate}}</option>
+                <option value="MILLAU">{{'weekendAppApp.City.MILLAU' | translate}}</option>
+                <option value="MONTELIMAR">{{'weekendAppApp.City.MONTELIMAR' | translate}}</option>
+                <option value="EMBRUN">{{'weekendAppApp.City.EMBRUN' | translate}}</option>
+                <option value="MONT_DE_MARSAN">{{'weekendAppApp.City.MONT_DE_MARSAN' | translate}}</option>
+                <option value="TARBES_OSSUN">{{'weekendAppApp.City.TARBES_OSSUN' | translate}}</option>
+                <option value="ST_GIRONS">{{'weekendAppApp.City.ST_GIRONS' | translate}}</option>
+                <option value="TOULOUSE_BLAGNAC">{{'weekendAppApp.City.TOULOUSE_BLAGNAC' | translate}}</option>
+                <option value="MONTPELLIER">{{'weekendAppApp.City.MONTPELLIER' | translate}}</option>
+                <option value="MARIGNANE">{{'weekendAppApp.City.MARIGNANE' | translate}}</option>
+                <option value="CAP_CEPET">{{'weekendAppApp.City.CAP_CEPET' | translate}}</option>
+                <option value="NICE">{{'weekendAppApp.City.NICE' | translate}}</option>
+                <option value="PERPIGNAN">{{'weekendAppApp.City.PERPIGNAN' | translate}}</option>
+                <option value="AJACCIO">{{'weekendAppApp.City.AJACCIO' | translate}}</option>
+                <option value="BASTIA">{{'weekendAppApp.City.BASTIA' | translate}}</option>
+                <option value="GLORIEUSES">{{'weekendAppApp.City.GLORIEUSES' | translate}}</option>
+                <option value="JUAN_DE_NOVA">{{'weekendAppApp.City.JUAN_DE_NOVA' | translate}}</option>
+                <option value="EUROPA">{{'weekendAppApp.City.EUROPA' | translate}}</option>
+                <option value="TROMELIN">{{'weekendAppApp.City.TROMELIN' | translate}}</option>
+                <option value="GILLOT_AEROPORT">{{'weekendAppApp.City.GILLOT_AEROPORT' | translate}}</option>
+                <option value="NOUVELLE_AMSTERDAM">{{'weekendAppApp.City.NOUVELLE_AMSTERDAM' | translate}}</option>
+                <option value="CROZET">{{'weekendAppApp.City.CROZET' | translate}}</option>
+                <option value="KERGUELEN">{{'weekendAppApp.City.KERGUELEN' | translate}}</option>
+                <option value="PAMANDZI">{{'weekendAppApp.City.PAMANDZI' | translate}}</option>
+                <option value="ST_PIERRE">{{'weekendAppApp.City.ST_PIERRE' | translate}}</option>
+                <option value="LA_DESIRADE_METEO">{{'weekendAppApp.City.LA_DESIRADE_METEO' | translate}}</option>
+                <option value="ST_BARTHELEMY_METEO">{{'weekendAppApp.City.ST_BARTHELEMY_METEO' | translate}}</option>
+                <option value="LE_RAIZET_AERO">{{'weekendAppApp.City.LE_RAIZET_AERO' | translate}}</option>
+                <option value="TRINITE_CARAVEL">{{'weekendAppApp.City.TRINITE_CARAVEL' | translate}}</option>
+                <option value="LAMENTIN_AERO">{{'weekendAppApp.City.LAMENTIN_AERO' | translate}}</option>
+                <option value="SAINT_LAURENT">{{'weekendAppApp.City.SAINT_LAURENT' | translate}}</option>
+                <option value="CAYENNE_MATOURY">{{'weekendAppApp.City.CAYENNE_MATOURY' | translate}}</option>
+                <option value="SAINT_GEORGES">{{'weekendAppApp.City.SAINT_GEORGES' | translate}}</option>
+                <option value="MARIPASOULA">{{'weekendAppApp.City.MARIPASOULA' | translate}}</option>
+                <option value="DUMONT_DURVILLE">{{'weekendAppApp.City.DUMONT_DURVILLE' | translate}}</option>
+            </select>
+            <div [hidden]="!(editForm.controls.city?.dirty && editForm.controls.city?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.city?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="weekendAppApp.activity.level" for="field_level">Level</label>
+            <select class="form-control" name="level" [(ngModel)]="activity.level" id="field_level"  required>
+                <option value="Debutant">{{'weekendAppApp.Level.Debutant' | translate}}</option>
+                <option value="Avancee">{{'weekendAppApp.Level.Avancee' | translate}}</option>
+                <option value="Professionnel">{{'weekendAppApp.Level.Professionnel' | translate}}</option>
+            </select>
+            <div [hidden]="!(editForm.controls.level?.dirty && editForm.controls.level?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.level?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="weekendAppApp.activity.user" for="field_user">User</label>
+            <select class="form-control" id="field_user" multiple name="user" [(ngModel)]="activity.users" required>
+                <option [ngValue]="getSelected(activity.users, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.user?.dirty && editForm.controls.user?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.user?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

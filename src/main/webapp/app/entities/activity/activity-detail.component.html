@@ -1,0 +1,39 @@
+
+<div *ngIf="activity">
+    <h2><span jhiTranslate="weekendAppApp.activity.detail.title">Activity</span> {{activity.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="weekendAppApp.activity.type">Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'weekendAppApp.Type.' + activity.type}}">{{activity.type}}</span>
+        </dd>
+        <dt><span jhiTranslate="weekendAppApp.activity.city">City</span></dt>
+        <dd>
+            <span jhiTranslate="{{'weekendAppApp.City.' + activity.city}}">{{activity.city}}</span>
+        </dd>
+        <dt><span jhiTranslate="weekendAppApp.activity.level">Level</span></dt>
+        <dd>
+            <span jhiTranslate="{{'weekendAppApp.Level.' + activity.level}}">{{activity.level}}</span>
+        </dd>
+        <dt><span jhiTranslate="weekendAppApp.activity.user">User</span></dt>
+        <dd>
+            <span *ngFor="let user of activity.users; let last = last">
+                {{user.login}}{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'activity/'+ activity.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

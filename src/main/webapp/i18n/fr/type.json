@@ -1,0 +1,14 @@
+{
+    "weekendAppApp": {
+        "Type" : {
+            "null": "",
+            "SKI": "SKI",
+            "VOILE": "VOILE",
+            "PLAGE": "PLAGE",
+            "SURF": "SURF",
+            "WAKE": "WAKE",
+            "VELO": "VELO",
+            "COURSEAPIED": "COURSEAPIED"
+        }
+    }
+}
