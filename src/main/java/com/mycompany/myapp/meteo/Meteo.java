@@ -389,5 +389,115 @@ public class Meteo {
 
         return false;
     }
+/*
+    public boolean getIt(Station a){
+
+        if(s.getNum_st() == num_st){
+        for(Station s:a.l){
+            // System.out.println(s.getNum_st()+"\n");
+
+            if(s.getNum_st() == num_st){
+
+                for(Year an:s.l){
+                    //System.out.println(an.getYear()+"\n");
+                    if(an.getYear()==Integer.parseInt(jComboBox6.getSelectedItem().toString())){
+                        if(jComboBox8.getSelectedItem().toString()=="--"){
+                            for(Month mo:an.listY){
+                                //
+
+                            }
+                        }
+                        else
+                        {
+
+                            for(Month mo:an.listY){
+                                // System.out.println(mo.getMo()+"\n");
+                                if(mo.getMo()==Integer.parseInt(jComboBox8.getSelectedItem().toString())){
+                                    if(jComboBox7.getSelectedItem().toString()=="--"){
+
+
+                                        m.visualizeGraph(mo.getMoy(),0,dataset1);
+                                        m.visualizeGraph(mo.getMoy(),1,dataset2);
+                                        m.visualizeGraph(mo.getMoy(),2,dataset3);
+                                        m.visualizeGraph(mo.getMoy(),6,dataset7);
+
+                                    }
+                                    else{for(Day j:mo.listM){
+                                        // System.out.println(j.getJ()+"dd\n");
+                                        // System.out.println(Integer.parseInt(jComboBox7.getSelectedItem().toString())+"\n");
+                                        if(j.getJ()==Integer.parseInt(jComboBox7.getSelectedItem().toString())){
+
+                                            m.visualizeGraph(j.getListj(),0,dataset1);
+                                            m.visualizeGraph(j.getListj(),1,dataset2);
+                                            m.visualizeGraph(j.getListj(),2,dataset3);
+                                            m.visualizeGraph(mo.getMoy(),6,dataset7);
+
+                                        }
+                                    }}
+
+                                }
+
+                            }}
+
+                    }
+                    if(an.getYear()==Integer.parseInt(jComboBox9.getSelectedItem().toString())){
+                        if(jComboBox8.getSelectedItem().toString()=="--"){
+                            for(Month mo:an.listY){
+
+
+                                m.visualizeGraph(mo.getMoy(),3,dataset4);
+                                m.visualizeGraph(mo.getMoy(),4,dataset5);
+                                m.visualizeGraph(mo.getMoy(),5,dataset6);
+                                m.visualizeGraph(mo.getMoy(),7,dataset8);
+
+
+                            }
+                        }
+                        else
+                        {
+
+                            for(Month mo:an.listY){
+                                // System.out.println(mo.getMo()+"\n");
+                                if(mo.getMo()==Integer.parseInt(jComboBox8.getSelectedItem().toString())){
+                                    if(jComboBox7.getSelectedItem().toString()=="--"){
+
+
+                                        m.visualizeGraph(mo.getMoy(),3,dataset4);
+                                        m.visualizeGraph(mo.getMoy(),4,dataset5);
+                                        m.visualizeGraph(mo.getMoy(),5,dataset6);
+                                        m.visualizeGraph(mo.getMoy(),7,dataset8);
+
+                                    }
+                                    else{for(Day j:mo.listM){
+                                        // System.out.println(j.getJ()+"dd\n");
+                                        // System.out.println(Integer.parseInt(jComboBox7.getSelectedItem().toString())+"\n");
+                                        if(j.getJ()==Integer.parseInt(jComboBox7.getSelectedItem().toString())){
+
+                                            m.visualizeGraph(j.getListj(),3,dataset4);
+                                            m.visualizeGraph(j.getListj(),4,dataset5);
+                                            m.visualizeGraph(j.getListj(),5,dataset6);
+                                            m.visualizeGraph(mo.getMoy(),7,dataset8);
+
+                                        }
+                                    }}
+
+                                }
+
+                            }}
+
+                    }
+
+
+                }
+
+            }
+        }
+
+
+
+        return true;
+
+    }
+    */
 
 }

@@ -1,7 +1,11 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.Activity;
 import com.mycompany.myapp.domain.Authority;
 import com.mycompany.myapp.domain.User;
+import com.mycompany.myapp.meteo.Data;
+import com.mycompany.myapp.meteo.Day;
+import com.mycompany.myapp.meteo.Meteo;
 import com.mycompany.myapp.repository.AuthorityRepository;
 import com.mycompany.myapp.repository.PersistentTokenRepository;
 import com.mycompany.myapp.config.Constants;
@@ -21,8 +25,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,6 +51,10 @@ public class UserService {
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
+
+    private Meteo meteo;
+
+    private Data data;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
@@ -273,15 +283,39 @@ public class UserService {
 
     @Scheduled(cron = "0 17 * * 3 ?")
     public void sendMail() {
-        //verifier les conditoins pour chaque sport
-        //verifysport();
-        // verifier pour chaque utilisateur
-        //verifyUser();
-        //envoyer un mail
+        //telecharger les donnees de ce mois
+        DateTimeFormatter dtfy = DateTimeFormatter.ofPattern("yyyy");
+        DateTimeFormatter dtfm = DateTimeFormatter.ofPattern("MM");
+        DateTimeFormatter dtfd = DateTimeFormatter.ofPattern("dd");
+        LocalDate localDate = LocalDate.now();
+        String downloadData = dtfy.format(localDate)+dtfm.format(localDate);
+        File f;
+        f = meteo.getData(downloadData);
+        data=meteo.filtostr(f);
+
+        //recheche des activites du user anisi que les city
+        String curretDate = dtfy.format(localDate)+dtfm.format(localDate)+dtfd.format(localDate);
+        List<Activity> list ;
         List<User> users = userRepository.findAll();
         for (User user : users) {
+            list=userRepository.findUserActivities(user.getLogin());
             log.debug("sending mails to users{}", user.getLogin());
+            for(Activity act : list){
+                act.getCity();
+                //recuperer num city
+                //recherche dans data
+                //recuper les donnes du jour
+                Day d;
 
+                //meteo.verifySport(act.getType(),act.getLevel(),d);
+
+            }
+            //verifier les conditoins pour chaque sport
+            //meteo.verifySport();
+
+
+            //envoyer un mail
+            //sender();
         }
     }
 
