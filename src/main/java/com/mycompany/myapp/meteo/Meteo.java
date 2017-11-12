@@ -291,6 +291,8 @@ public class Meteo {
 
     public boolean verifySport(Type sport, Level level, Day day){
 
+
+        int i=0;
        // SKI, VOILE, PLAGE, SURF, WAKE, VELO, COURSEAPIED
        // determine si possible de faire un sport
         switch(sport){
@@ -298,21 +300,22 @@ public class Meteo {
                 switch (level){
                     case Debutant :
                             for(Unit u : day.getListj())
-                            {
-                                if(u.getVitesseVent()>11) return false;
+                            { i++;
+                                if(u.getVitesseVent()>11 && i>3) return false;
                             }
+
                         break;
                     case Avancee:
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>38) return false;
+                        { i++;
+                            if(u.getVitesseVent()>38 && i>3) return false;
                         }
 
                         break;
                     case Professionnel :
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>61) return false;
+                        {i++;
+                            if(u.getVitesseVent()>61 && i>3) return false;
                         }
                         break;
                         default: break;
@@ -324,20 +327,20 @@ public class Meteo {
                 switch (level){
                     case Debutant :
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>38 ||u.getVitesseVent()<12) return false;
+                        {i++;
+                            if(u.getVitesseVent()>38 && i>3 ||u.getVitesseVent()<12) return false;
                         }
                         break;
                     case Avancee:
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>11||u.getVitesseVent()<0) return false;
+                        {i++;
+                            if(u.getVitesseVent()>11||u.getVitesseVent()<0 && i>3) return false;
                         }
                         break;
                     case Professionnel:
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>88) return false;
+                        {i++;
+                            if(u.getVitesseVent()>88 && i>3) return false;
                         }
                         break;
                     default: break;
@@ -348,8 +351,8 @@ public class Meteo {
                 break;
             case PLAGE :
                 for(Unit u : day.getListj())
-                {
-                    if(u.getVitesseVent()>40 ||u.getHumidite()>70||u.getTemp()<25||u.getTemp()>35||u.getPrecipitation()>1) return false;
+                {i++;
+                    if(u.getVitesseVent()>40 ||u.getHumidite()>70||u.getTemp()<25||u.getTemp()>35||u.getPrecipitation()>1&& i>3) return false;
                 }
 
                 break;
@@ -357,20 +360,20 @@ public class Meteo {
                 switch (level){
                     case Debutant:
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>19 ||u.getVitesseVent()<0) return false;
+                        {i++;
+                            if(u.getVitesseVent()>19 ||u.getVitesseVent()<0&& i>3) return false;
                         }
                         break;
                     case Avancee:
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>38||u.getVitesseVent()<20) return false;
+                        {i++;
+                            if(u.getVitesseVent()>38||u.getVitesseVent()<20&& i>3) return false;
                         }
                         break;
                     case Professionnel:
                         for(Unit u : day.getListj())
-                        {
-                            if(u.getVitesseVent()>74||u.getVitesseVent()<39) return false;
+                        {i++;
+                            if(u.getVitesseVent()>74||u.getVitesseVent()<39&& i>3) return false;
                         }
                         break;
                     default: break;
@@ -380,20 +383,20 @@ public class Meteo {
                 break;
             case WAKE :
                 for(Unit u : day.getListj())
-                {
-                    if(u.getVitesseVent()>11||u.getPrecipitation()>1) return false;
+                {i++;
+                    if(u.getVitesseVent()>11||u.getPrecipitation()>1&& i>3) return false;
                 }
                 break;
             case VELO :
                 for(Unit u : day.getListj())
-                {
-                    if(u.getVitesseVent()>40||u.getPrecipitation()>1) return false;
+                {i++;
+                    if(u.getVitesseVent()>40||u.getPrecipitation()>1&& i>3) return false;
                 }
                 break;
             case COURSEAPIED :
                 for(Unit u : day.getListj())
-                {
-                    if(u.getVitesseVent()>40 || u.getPrecipitation()>1) return false;
+                {i++;
+                    if(u.getVitesseVent()>40 || u.getPrecipitation()>1&& i>3) return false;
                 }
                 break;
                 default:
@@ -403,28 +406,28 @@ public class Meteo {
 
 
 
-        return false;
+        return true;
     }
 
-public void sendMail (String user) throws Exception {
-    Properties props = System.getProperties();
-    props.put("mail.smtps.host","smtp.gmail.com");
-    props.put("mail.smtps.auth","true");
-    Session session = Session.getInstance(props, null);
-    Message msg = new MimeMessage(session);
-    msg.setFrom(new InternetAddress("weekendapp9@gmail.com"));;
-    msg.setRecipients(Message.RecipientType.TO,
-        InternetAddress.parse("christopheplanchais@gmail.com", false));
-    msg.setSubject("Heisann "+System.currentTimeMillis());
-    msg.setText("privet");
-    msg.setHeader("X-Mailer", "Tov Are's program");
-    msg.setSentDate(new Date());
-    SMTPTransport t =
-        (SMTPTransport)session.getTransport("smtps");
-    t.connect("smtp.gmail.com", "weekendapp9", "christophe2017");
-    t.sendMessage(msg, msg.getAllRecipients());
-    System.out.println("Response: " + t.getLastServerResponse());
-    t.close();
+    public void sendMail (String message,String user) throws Exception {
+        Properties props = System.getProperties();
+        props.put("mail.smtps.host","smtp.gmail.com");
+        props.put("mail.smtps.auth","true");
+        Session session = Session.getInstance(props, null);
+        Message msg = new MimeMessage(session);
+        msg.setFrom(new InternetAddress("weekendapp9@gmail.com"));;
+        msg.setRecipients(Message.RecipientType.TO,
+            InternetAddress.parse(user, false));
+        msg.setSubject("Weekend APP Mail Notification");
+        msg.setText(message);
+        msg.setHeader("X-Mailer", "Weekend APP");
+        msg.setSentDate(new Date());
+        SMTPTransport t =
+            (SMTPTransport)session.getTransport("smtps");
+        t.connect("smtp.gmail.com", "weekendapp9", "christophe2017");
+        t.sendMessage(msg, msg.getAllRecipients());
+        System.out.println("Response: " + t.getLastServerResponse());
+        t.close();
 }
 
 }
