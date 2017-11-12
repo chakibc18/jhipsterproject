@@ -1,6 +1,8 @@
 package com.mycompany.myapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.mycompany.myapp.security.AuthoritiesConstants;
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.ActivityService;
 import com.mycompany.myapp.web.rest.util.HeaderUtil;
 import com.mycompany.myapp.service.dto.ActivityDTO;
@@ -85,7 +87,10 @@ public class ActivityResource {
     @Timed
     public List<ActivityDTO> getAllActivities() {
         log.debug("REST request to get all Activities");
-        return activityService.findAll();
+        if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN))
+            return activityService.findAll();
+
+        return activityService.findUserActivities();
         }
 
     /**

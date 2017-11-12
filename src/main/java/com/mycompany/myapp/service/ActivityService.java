@@ -2,6 +2,7 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Activity;
 import com.mycompany.myapp.repository.ActivityRepository;
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.dto.ActivityDTO;
 import com.mycompany.myapp.service.mapper.ActivityMapper;
 import org.slf4j.Logger;
@@ -56,6 +57,24 @@ public class ActivityService {
             .map(activityMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+
+    /**
+     *  Get all the activities of the user.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<ActivityDTO> findUserActivities() {
+        log.debug("Request to get all Activities");
+
+        //List<Activity> activity = activityRepository.findUserActivities(SecurityUtils.getCurrentUserLogin());
+
+        return activityRepository.findUserActivities(SecurityUtils.getCurrentUserLogin()).stream()
+            .map(activityMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+
 
     /**
      *  Get one activity by id.

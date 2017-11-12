@@ -5,6 +5,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.AuthoritiesConstants;
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.MailService;
 import com.mycompany.myapp.service.UserService;
 import com.mycompany.myapp.service.dto.UserDTO;
@@ -150,7 +151,12 @@ public class UserResource {
     @GetMapping("/users")
     @Timed
     public ResponseEntity<List<UserDTO>> getAllUsers(@ApiParam Pageable pageable) {
-        final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
+            return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        }
+        final Page<UserDTO> page = userService.getUser(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
