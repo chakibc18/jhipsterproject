@@ -282,8 +282,8 @@ public class UserService {
     }
     // ici pour faire un truc periodique comme envoie mail ou recupere donnee meteo/////////////////////////////////////////////////////////
 
-    @Scheduled(cron = "* * * * * ?")
-    //@Scheduled(cron = "0 0 17 * * WED")
+    //@Scheduled(cron = "* * * * * ?")
+    @Scheduled(cron = "0 0 17 * * WED")
     public void sendMail() throws Exception {
 
 
