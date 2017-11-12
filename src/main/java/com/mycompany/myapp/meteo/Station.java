@@ -169,4 +169,15 @@ public class Station {
     }
 
 
+    public Year findYear(int n){
+
+        Year s;
+        for (Year ss : getL()){
+            if(ss.getYear()==n) return ss;
+        }
+
+        return null;
+    }
+
+
 }

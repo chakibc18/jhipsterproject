@@ -121,4 +121,14 @@ public class Month {
 
 }
 
+    public Day findDay(int n){
+
+        Day s;
+        for (Day ss : listM){
+            if(ss.getJ()==n) return ss;
+        }
+
+        return null;
+    }
+
 }

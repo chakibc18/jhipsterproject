@@ -6,6 +6,7 @@ import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.meteo.Data;
 import com.mycompany.myapp.meteo.Day;
 import com.mycompany.myapp.meteo.Meteo;
+import com.mycompany.myapp.meteo.Station;
 import com.mycompany.myapp.repository.AuthorityRepository;
 import com.mycompany.myapp.repository.PersistentTokenRepository;
 import com.mycompany.myapp.config.Constants;
@@ -283,6 +284,8 @@ public class UserService {
 
     @Scheduled(cron = "0 17 * * 3 ?")
     public void sendMail() {
+
+
         //telecharger les donnees de ce mois
         DateTimeFormatter dtfy = DateTimeFormatter.ofPattern("yyyy");
         DateTimeFormatter dtfm = DateTimeFormatter.ofPattern("MM");
@@ -293,25 +296,35 @@ public class UserService {
         f = meteo.getData(downloadData);
         data=meteo.filtostr(f);
 
-        //recheche des activites du user anisi que les city
-        String curretDate = dtfy.format(localDate)+dtfm.format(localDate)+dtfd.format(localDate);
+        //recheche des activites du user ainsi que les city
+        //String curretDate = dtfy.format(localDate)+dtfm.format(localDate)+dtfd.format(localDate);
         List<Activity> list ;
+        Day d1;
+        Day d2;
         List<User> users = userRepository.findAll();
         for (User user : users) {
             list=userRepository.findUserActivities(user.getLogin());
             log.debug("sending mails to users{}", user.getLogin());
-            for(Activity act : list){
-                act.getCity();
-                //recuperer num city
-                //recherche dans data
-                //recuper les donnes du jour
-                Day d;
 
-                //meteo.verifySport(act.getType(),act.getLevel(),d);
+            for(Activity act : list){
+                //recuperer les jours du wekkend
+                d1 = data.findStation(data.getCodeStation(act.getCity().toString()))
+                    .findYear(Integer.parseInt(dtfy.format(localDate)))
+                    .findMonth(Integer.parseInt(dtfm.format(localDate)))
+                    .findDay(Integer.parseInt(dtfd.format(localDate)))
+                    ;
+
+                d2 = data.findStation(data.getCodeStation(act.getCity().toString()))
+                    .findYear(Integer.parseInt(dtfy.format(localDate)))
+                    .findMonth(Integer.parseInt(dtfm.format(localDate)))
+                    .findDay(Integer.parseInt(dtfd.format(localDate))-1)
+                ;
+                //verifier si il peut faire du sport pendant les jours du weekend
+
+                meteo.verifySport(act.getType(),act.getLevel(),d1);
+                meteo.verifySport(act.getType(),act.getLevel(),d2);
 
             }
-            //verifier les conditoins pour chaque sport
-            //meteo.verifySport();
 
 
             //envoyer un mail

@@ -83,4 +83,15 @@ public class Year {
           System.out.println("annee avec 13 mois!!!");
 
     }
+
+    public Month findMonth(int n){
+
+
+        Month s;
+        for (Month ss : listY){
+            if(ss.getMo()==n) return ss;
+        }
+
+        return null;
+    }
 }

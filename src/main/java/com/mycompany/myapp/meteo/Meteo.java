@@ -7,6 +7,10 @@
 package com.mycompany.myapp.meteo;
 
 
+import com.mycompany.myapp.domain.enumeration.City;
+import com.mycompany.myapp.domain.enumeration.Level;
+import com.mycompany.myapp.domain.enumeration.Type;
+
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -275,27 +279,27 @@ public class Meteo {
     }
 
 
-    public boolean verifySport(String sport, int level,Day day){
+    public boolean verifySport(Type sport, Level level, Day day){
 
        // SKI, VOILE, PLAGE, SURF, WAKE, VELO, COURSEAPIED
        // determine si possible de faire un sport
         switch(sport){
-            case "SKI" :
+            case SKI :
                 switch (level){
-                    case 0 :
+                    case Debutant :
                             for(Unit u : day.getListj())
                             {
                                 if(u.getVitesseVent()>11) return false;
                             }
                         break;
-                    case 1 :
+                    case Avancee:
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>38) return false;
                         }
 
                         break;
-                    case 2 :
+                    case Professionnel :
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>61) return false;
@@ -306,21 +310,21 @@ public class Meteo {
 
                 }
                 break;
-            case "VOILE" :
+            case VOILE :
                 switch (level){
-                    case 0 :
+                    case Debutant :
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>38 ||u.getVitesseVent()<12) return false;
                         }
                         break;
-                    case 1 :
+                    case Avancee:
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>11||u.getVitesseVent()<0) return false;
                         }
                         break;
-                    case 2 :
+                    case Professionnel:
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>88) return false;
@@ -332,28 +336,28 @@ public class Meteo {
                 }
 
                 break;
-            case "PLAGE" :
+            case PLAGE :
                 for(Unit u : day.getListj())
                 {
                     if(u.getVitesseVent()>40 ||u.getHumidite()>70||u.getTemp()<25||u.getTemp()>35||u.getPrecipitation()>1) return false;
                 }
 
                 break;
-            case "SURF" :
+            case SURF :
                 switch (level){
-                    case 0 :
+                    case Debutant:
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>19 ||u.getVitesseVent()<0) return false;
                         }
                         break;
-                    case 1 :
+                    case Avancee:
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>38||u.getVitesseVent()<20) return false;
                         }
                         break;
-                    case 2 :
+                    case Professionnel:
                         for(Unit u : day.getListj())
                         {
                             if(u.getVitesseVent()>74||u.getVitesseVent()<39) return false;
@@ -364,24 +368,26 @@ public class Meteo {
 
                 }
                 break;
-            case "WAKE" :
+            case WAKE :
                 for(Unit u : day.getListj())
                 {
                     if(u.getVitesseVent()>11||u.getPrecipitation()>1) return false;
                 }
                 break;
-            case "VELO" :
+            case VELO :
                 for(Unit u : day.getListj())
                 {
                     if(u.getVitesseVent()>40||u.getPrecipitation()>1) return false;
                 }
                 break;
-            case "COURSEAPIED" :
+            case COURSEAPIED :
                 for(Unit u : day.getListj())
                 {
                     if(u.getVitesseVent()>40 || u.getPrecipitation()>1) return false;
                 }
                 break;
+                default:
+                    return false;
 
         }
 
@@ -389,115 +395,7 @@ public class Meteo {
 
         return false;
     }
-/*
-    public boolean getIt(Station a){
-
-        if(s.getNum_st() == num_st){
-        for(Station s:a.l){
-            // System.out.println(s.getNum_st()+"\n");
-
-            if(s.getNum_st() == num_st){
-
-                for(Year an:s.l){
-                    //System.out.println(an.getYear()+"\n");
-                    if(an.getYear()==Integer.parseInt(jComboBox6.getSelectedItem().toString())){
-                        if(jComboBox8.getSelectedItem().toString()=="--"){
-                            for(Month mo:an.listY){
-                                //
-
-                            }
-                        }
-                        else
-                        {
-
-                            for(Month mo:an.listY){
-                                // System.out.println(mo.getMo()+"\n");
-                                if(mo.getMo()==Integer.parseInt(jComboBox8.getSelectedItem().toString())){
-                                    if(jComboBox7.getSelectedItem().toString()=="--"){
 
 
-                                        m.visualizeGraph(mo.getMoy(),0,dataset1);
-                                        m.visualizeGraph(mo.getMoy(),1,dataset2);
-                                        m.visualizeGraph(mo.getMoy(),2,dataset3);
-                                        m.visualizeGraph(mo.getMoy(),6,dataset7);
-
-                                    }
-                                    else{for(Day j:mo.listM){
-                                        // System.out.println(j.getJ()+"dd\n");
-                                        // System.out.println(Integer.parseInt(jComboBox7.getSelectedItem().toString())+"\n");
-                                        if(j.getJ()==Integer.parseInt(jComboBox7.getSelectedItem().toString())){
-
-                                            m.visualizeGraph(j.getListj(),0,dataset1);
-                                            m.visualizeGraph(j.getListj(),1,dataset2);
-                                            m.visualizeGraph(j.getListj(),2,dataset3);
-                                            m.visualizeGraph(mo.getMoy(),6,dataset7);
-
-                                        }
-                                    }}
-
-                                }
-
-                            }}
-
-                    }
-                    if(an.getYear()==Integer.parseInt(jComboBox9.getSelectedItem().toString())){
-                        if(jComboBox8.getSelectedItem().toString()=="--"){
-                            for(Month mo:an.listY){
-
-
-                                m.visualizeGraph(mo.getMoy(),3,dataset4);
-                                m.visualizeGraph(mo.getMoy(),4,dataset5);
-                                m.visualizeGraph(mo.getMoy(),5,dataset6);
-                                m.visualizeGraph(mo.getMoy(),7,dataset8);
-
-
-                            }
-                        }
-                        else
-                        {
-
-                            for(Month mo:an.listY){
-                                // System.out.println(mo.getMo()+"\n");
-                                if(mo.getMo()==Integer.parseInt(jComboBox8.getSelectedItem().toString())){
-                                    if(jComboBox7.getSelectedItem().toString()=="--"){
-
-
-                                        m.visualizeGraph(mo.getMoy(),3,dataset4);
-                                        m.visualizeGraph(mo.getMoy(),4,dataset5);
-                                        m.visualizeGraph(mo.getMoy(),5,dataset6);
-                                        m.visualizeGraph(mo.getMoy(),7,dataset8);
-
-                                    }
-                                    else{for(Day j:mo.listM){
-                                        // System.out.println(j.getJ()+"dd\n");
-                                        // System.out.println(Integer.parseInt(jComboBox7.getSelectedItem().toString())+"\n");
-                                        if(j.getJ()==Integer.parseInt(jComboBox7.getSelectedItem().toString())){
-
-                                            m.visualizeGraph(j.getListj(),3,dataset4);
-                                            m.visualizeGraph(j.getListj(),4,dataset5);
-                                            m.visualizeGraph(j.getListj(),5,dataset6);
-                                            m.visualizeGraph(mo.getMoy(),7,dataset8);
-
-                                        }
-                                    }}
-
-                                }
-
-                            }}
-
-                    }
-
-
-                }
-
-            }
-        }
-
-
-
-        return true;
-
-    }
-    */
 
 }
