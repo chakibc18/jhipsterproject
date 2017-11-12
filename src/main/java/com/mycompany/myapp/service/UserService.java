@@ -282,8 +282,9 @@ public class UserService {
     }
     // ici pour faire un truc periodique comme envoie mail ou recupere donnee meteo/////////////////////////////////////////////////////////
 
-    @Scheduled(cron = "0 17 * * 3 ?")
-    public void sendMail() {
+    //@Scheduled(cron = "0 1 * * * ?")
+    @Scheduled(cron = "0 0 17 * * WED")
+    public void sendMail() throws Exception {
 
 
         //telecharger les donnees de ce mois
@@ -292,10 +293,11 @@ public class UserService {
         DateTimeFormatter dtfd = DateTimeFormatter.ofPattern("dd");
         LocalDate localDate = LocalDate.now();
         String downloadData = dtfy.format(localDate)+dtfm.format(localDate);
-        File f;
+        File f=new File(downloadData+"csv");
+        meteo=new Meteo();
         f = meteo.getData(downloadData);
         data=meteo.filtostr(f);
-
+        String messageToSend="";
         //recheche des activites du user ainsi que les city
         //String curretDate = dtfy.format(localDate)+dtfm.format(localDate)+dtfd.format(localDate);
         List<Activity> list ;
@@ -303,33 +305,51 @@ public class UserService {
         Day d2;
         List<User> users = userRepository.findAll();
         for (User user : users) {
-            list=userRepository.findUserActivities(user.getLogin());
-            log.debug("sending mails to users{}", user.getLogin());
+            messageToSend="";
+            if(user.getId()>4) {
 
-            for(Activity act : list){
-                //recuperer les jours du wekkend
-                d1 = data.findStation(data.getCodeStation(act.getCity().toString()))
-                    .findYear(Integer.parseInt(dtfy.format(localDate)))
-                    .findMonth(Integer.parseInt(dtfm.format(localDate)))
-                    .findDay(Integer.parseInt(dtfd.format(localDate)))
+                list = userRepository.findUserActivities(user.getLogin());
+                log.debug("sending mails to users{}", user.getLogin());
+                messageToSend = "Bonjour " + user.getLogin() + " pour ce weekend on vous conseille :\n";
+                for (Activity act : list) {
+                    //recuperer les jours du wekkend
+                    d1 = data.findStation(data.getCodeStation(act.getCity().toString()))
+                        .findYear(Integer.parseInt(dtfy.format(localDate)))
+                        .findMonth(Integer.parseInt(dtfm.format(localDate)))
+                        .findDay(Integer.parseInt(dtfd.format(localDate)))
                     ;
 
-                d2 = data.findStation(data.getCodeStation(act.getCity().toString()))
-                    .findYear(Integer.parseInt(dtfy.format(localDate)))
-                    .findMonth(Integer.parseInt(dtfm.format(localDate)))
-                    .findDay(Integer.parseInt(dtfd.format(localDate))-1)
-                ;
-                //verifier si il peut faire du sport pendant les jours du weekend
+                    d2 = data.findStation(data.getCodeStation(act.getCity().toString()))
+                        .findYear(Integer.parseInt(dtfy.format(localDate)))
+                        .findMonth(Integer.parseInt(dtfm.format(localDate)))
+                        .findDay(Integer.parseInt(dtfd.format(localDate)) - 1)
+                    ;
+                    //verifier si il peut faire du sport pendant les jours du weekend
 
-                meteo.verifySport(act.getType(),act.getLevel(),d1);
-                meteo.verifySport(act.getType(),act.getLevel(),d2);
+                    if (meteo.verifySport(act.getType(), act.getLevel(), d1))
+                        messageToSend += "-De faire du " + act.getType().toString() + " car les conditions sont ideales pendant le dimanche\n";
+                    else
+                        messageToSend += "-De ne pas faire du " + act.getType().toString() + " car la meteo le deconseille pendant le dimanche\n";
 
+                    if (meteo.verifySport(act.getType(), act.getLevel(), d2))
+                        messageToSend += "-De faire du " + act.getType().toString() + " car les conditions sont ideales pendant le samedi\n";
+                    else
+                        messageToSend += "-De ne pas faire du " + act.getType().toString() + " car la meteo le deconseille pendant le samedi\n";
+
+
+
+
+                }
+
+                messageToSend += "Bon weekend";
+                System.out.println(messageToSend + " " + user.getEmail());
+                meteo.sendMail(messageToSend, user.getEmail());
+                //System.out.println(messageToSend + "22222 " + user.getEmail());
+            }
+                //envoyer un mail
+                //sender();
             }
 
-
-            //envoyer un mail
-            //sender();
-        }
     }
 
     /**
