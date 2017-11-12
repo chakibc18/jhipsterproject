@@ -25,6 +25,16 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
 
+import java.io.*;
+import java.net.InetAddress;
+import java.util.Properties;
+import java.util.Date;
+
+import javax.mail.*;
+
+import javax.mail.internet.*;
+
+import com.sun.mail.smtp.*;
 
 /**
  *
@@ -396,6 +406,25 @@ public class Meteo {
         return false;
     }
 
-
+public void sendMail (String user) throws Exception {
+    Properties props = System.getProperties();
+    props.put("mail.smtps.host","smtp.gmail.com");
+    props.put("mail.smtps.auth","true");
+    Session session = Session.getInstance(props, null);
+    Message msg = new MimeMessage(session);
+    msg.setFrom(new InternetAddress("weekendapp9@gmail.com"));;
+    msg.setRecipients(Message.RecipientType.TO,
+        InternetAddress.parse("christopheplanchais@gmail.com", false));
+    msg.setSubject("Heisann "+System.currentTimeMillis());
+    msg.setText("privet");
+    msg.setHeader("X-Mailer", "Tov Are's program");
+    msg.setSentDate(new Date());
+    SMTPTransport t =
+        (SMTPTransport)session.getTransport("smtps");
+    t.connect("smtp.gmail.com", "weekendapp9", "christophe2017");
+    t.sendMessage(msg, msg.getAllRecipients());
+    System.out.println("Response: " + t.getLastServerResponse());
+    t.close();
+}
 
 }
